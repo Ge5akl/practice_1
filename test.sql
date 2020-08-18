@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXISTS `disc` (
   `user_id` int(11) NOT NULL DEFAULT 0,
   `description` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Active',
+  `status` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Экспортируемые данные не выделены.
 
@@ -34,8 +34,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `login` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Экспортируемые данные не выделены.
 

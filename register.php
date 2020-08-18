@@ -20,26 +20,7 @@
         
         //Проверяем полученную капчу
         //Обрезаем пробелы с начала и с конца строки
-        $captcha = trim($_POST["captcha"]);
-
-        if(isset($_POST["captcha"]) && !empty($captcha)){
-
-            //Сравниваем полученное значение с значением из сессии. 
-            if(($_SESSION["rand"] != $captcha) && ($_SESSION["rand"] != "")){
-                
-                // Если капча не верна, то возвращаем пользователя на страницу регистрации, и там выведем ему сообщение об ошибке что он ввёл неправильную капчу.
-                $error_message = "<p class='mesage_error'><strong>Ошибка!</strong> Вы ввели неправильную капчу </p>";
-
-                // Сохраняем в сессию сообщение об ошибке. 
-                $_SESSION["error_messages"] = $error_message;
-
-                //Возвращаем пользователя на страницу регистрации
-                header("HTTP/1.1 301 Moved Permanently");
-                header("Location: ".$address_site."/form_register.php");
-
-                //Останавливаем скрипт
-                exit();
-            }
+          
 
             // (2) Место для следующего куска кода
             
@@ -79,45 +60,29 @@
             }
 
             
-            if(isset($_POST["email"])){
+            if(isset($_POST["login"])){
 
                 //Обрезаем пробелы с начала и с конца строки
-                $email = trim($_POST["email"]);
+                $login = trim($_POST["login"]);
 
-                if(!empty($email)){
+                if(!empty($login)){
 
 
-                    $email = htmlspecialchars($email, ENT_QUOTES);
+                    $login = htmlspecialchars($login, ENT_QUOTES);
 
                     // (3) Место кода для проверки формата почтового адреса и его уникальности
 
-                    //Проверяем формат полученного почтового адреса с помощью регулярного выражения
-                    $reg_email = "/^[a-z0-9][a-z0-9\._-]*[a-z0-9]*@([a-z0-9]+([a-z0-9-]*[a-z0-9]+)*\.)+[a-z]+/i";
-
-                    //Если формат полученного почтового адреса не соответствует регулярному выражению
-                    if( !preg_match($reg_email, $email)){
-                        // Сохраняем в сессию сообщение об ошибке. 
-                        $_SESSION["error_messages"] .= "<p class='mesage_error' >Вы ввели неправельный email</p>";
-                        
-                        //Возвращаем пользователя на страницу регистрации
-                        header("HTTP/1.1 301 Moved Permanently");
-                        header("Location: ".$address_site."/form_register.php");
-
-                        //Останавливаем  скрипт
-                        exit();
-                    }
 
                     //Проверяем нет ли уже такого адреса в БД.
-                    $result_query = $mysqli->query("SELECT `email` FROM `users` WHERE `email`='".$email."'");
+                    $result_query = $mysqli->query("SELECT `login` FROM `users` WHERE `login`='".$login."'");
                     
-                    //Если кол-во полученных строк ровно единице, значит пользователь с таким почтовым адресом уже зарегистрирован
                     if($result_query->num_rows == 1){
 
                         //Если полученный результат не равен false
                         if(($row = $result_query->fetch_assoc()) != false){
                             
                                 // Сохраняем в сессию сообщение об ошибке. 
-                                $_SESSION["error_messages"] .= "<p class='mesage_error' >Пользователь с таким почтовым адресом уже зарегистрирован</p>";
+                                $_SESSION["error_messages"] .= "<p class='mesage_error' >Пользователь с таким логином уже зарегистрирован</p>";
                                 
                                 //Возвращаем пользователя на страницу регистрации
                                 header("HTTP/1.1 301 Moved Permanently");
@@ -143,7 +108,7 @@
                     $result_query->close();
                 }else{
                     // Сохраняем в сессию сообщение об ошибке. 
-                    $_SESSION["error_messages"] .= "<p class='mesage_error'>Укажите Ваш email</p>";
+                    $_SESSION["error_messages"] .= "<p class='mesage_error'>Укажите Ваш login</p>";
                     
                     //Возвращаем пользователя на страницу регистрации
                     header("HTTP/1.1 301 Moved Permanently");
@@ -155,7 +120,7 @@
 
             }else{
                 // Сохраняем в сессию сообщение об ошибке. 
-                $_SESSION["error_messages"] .= "<p class='mesage_error'>Отсутствует поле для ввода Email</p>";
+                $_SESSION["error_messages"] .= "<p class='mesage_error'>Отсутствует поле для ввода login</p>";
                 
                 //Возвращаем пользователя на страницу регистрации
                 header("HTTP/1.1 301 Moved Permanently");
@@ -203,7 +168,7 @@
             // (4) Место для кода добавления пользователя в БД
 
             //Запрос на добавления пользователя в БД
-            $result_query_insert = $mysqli->query("INSERT INTO `users` (login, email, password) VALUES ('".$login."','".$email."', '".$password."')");
+            $result_query_insert = $mysqli->query("INSERT INTO `users` (login, password) VALUES ('".$login."','".$password."')");
 
             if(!$result_query_insert){
                 // Сохраняем в сессию сообщение об ошибке. 
@@ -230,13 +195,5 @@
             //Закрываем подключение к БД
             $mysqli->close();
             
-        }else{
-            //Если капча не передана либо оно является пустой
-            exit("<p><strong>Ошибка!</strong> Отсутствует проверечный код, то есть код капчи. Вы можете перейти на <a href=".$address_site."> главную страницу </a>.</p>");
         }
-
-    }else{
-
-        exit("<p><strong>Ошибка!</strong> Вы зашли на эту страницу напрямую, поэтому нет данных для обработки. Вы можете перейти на <a href=".$address_site."> главную страницу </a>.</p>");
-    }
 ?>

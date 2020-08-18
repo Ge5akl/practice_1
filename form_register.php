@@ -26,25 +26,19 @@
 <?php
     //Проверяем, если пользователь не авторизован, то выводим форму регистрации, 
     //иначе выводим сообщение о том, что он уже зарегистрирован
-    if(!isset($_SESSION["email"]) && !isset($_SESSION["password"])){
+    if(!isset($_SESSION["login"]) && !isset($_SESSION["password"])){
 ?>
         <div id="form_register">
             <h2>Форма регистрации</h2>
  
             <form action="register.php" method="post" name="form_register">
                 <table>
-                    <tbody><tr>
-                        <td> Имя: </td>
-                        <td>
-                            <input type="text" name="login" required="required">
-                        </td>
-                    </tr>
-              
+                    <tbody>
                     <tr>
-                        <td> Email: </td>
+                        <td> login: </td>
                         <td>
-                            <input type="email" name="email" required="required"><br>
-                            <span id="valid_email_message" class="mesage_error"></span>
+                            <input type="text" name="login" required="required"><br>
+                            <span id="valid_login_message" class="mesage_error"></span>
                         </td>
                     </tr>
               
@@ -53,13 +47,6 @@
                         <td>
                             <input type="password" name="password" placeholder="минимум 6 символов" required="required"><br>
                             <span id="valid_password_message" class="mesage_error"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> Введите капчу: </td>
-                        <td>
-                                <img src="captcha.php" alt="Капча" /> <br><br>
-                                <input type="text" name="captcha" placeholder="Проверочный код" required="required">
                         </td>
                     </tr>
                     <tr>

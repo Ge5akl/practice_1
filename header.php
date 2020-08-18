@@ -14,33 +14,8 @@
         <script type="text/javascript">
             $(document).ready(function(){
                 "use strict";
-                //================ Проверка email ==================
-         
-                //регулярное выражение для проверки email
-                var pattern = /^[a-z0-9][a-z0-9\._-]*[a-z0-9]*@([a-z0-9]+([a-z0-9-]*[a-z0-9]+)*\.)+[a-z]+/i;
-                var mail = $('input[name=email]');
-                 
-                mail.blur(function(){
-                    if(mail.val() != ''){
-         
-                        // Проверяем, если введенный email соответствует регулярному выражению
-                        if(mail.val().search(pattern) == 0){
-                            // Убираем сообщение об ошибке
-                            $('#valid_email_message').text('');
-         
-                            //Активируем кнопку отправки
-                            $('input[type=submit]').attr('disabled', false);
-                        }else{
-                            //Выводим сообщение об ошибке
-                            $('#valid_email_message').text('Не правильный Email');
-         
-                            // Дезактивируем кнопку отправки
-                            $('input[type=submit]').attr('disabled', true);
-                        }
-                    }else{
-                        $('#valid_email_message').text('Введите Ваш email');
-                    }
-                });
+          
+
          
                 //================ Проверка длины пароля ==================
                 var password = $('input[name=password]');
@@ -81,7 +56,7 @@
   <div class="collapse navbar-collapse" id="navbarNav">
             <?php
                 //Проверяем авторизован ли пользователь
-                if(!isset($_SESSION['email']) && !isset($_SESSION['password'])){
+                if(!isset($_SESSION['login']) && !isset($_SESSION['password'])){
                     // если нет, то выводим блок с ссылками на страницу регистрации и авторизации
             ?>
                         <a class="nav-link" href="/form_register.php">Регистрация</a>
@@ -100,5 +75,4 @@
              <div class="clear"></div>
         </div>
         </div>
-        </nav>
-    
+        </nav>  
