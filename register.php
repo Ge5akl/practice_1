@@ -28,7 +28,7 @@
             if(isset($_POST["login"])){
                 
                 //Обрезаем пробелы с начала и с конца строки
-                $login = trim($_POST["login"]);
+                $login = trim(htmlspecialchars($_POST["login"]));
 
                 //Проверяем переменную на пустоту
                 if(!empty($login)){
@@ -63,7 +63,7 @@
             if(isset($_POST["login"])){
 
                 //Обрезаем пробелы с начала и с конца строки
-                $login = trim($_POST["login"]);
+                $login = trim( htmlspecialchars($_POST["login"]));
 
                 if(!empty($login)){
 

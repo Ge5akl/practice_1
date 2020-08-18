@@ -1,9 +1,9 @@
 <?php 
-header('Location: index.php');
+   header('Location: index.php');
    include("dbconnect.php");
    include("index.php");
-$login = $_SESSION['login'];
-$discript = $_POST["name"];
+$login =  htmlspecialchars((string)$_SESSION['login']);
+$discript =  htmlspecialchars((string)$_POST["name"]);
 $today = date("m.d.y");       
 /* создаем подготавливаемый запрос */
 if ($stmt = $mysqli->prepare("SELECT id FROM `users` WHERE login=?")) {
@@ -19,7 +19,8 @@ $stmt->bind_result($district);
   $stmt->close();
   echo($_SESSION["district"]);
 
-  $result_query_insert = $mysqli->query("INSERT INTO `disc` (user_id, description, created_at) VALUES ('".$district."', '".$discript."', '".$today."')");
+ $result_query_insert = $mysqli->query("INSERT INTO `disc` (user_id, description, created_at) VALUES ('".$district."', '".$discript."', '".$today."')");
+
 }
 
 
